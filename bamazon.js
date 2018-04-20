@@ -52,3 +52,12 @@ function start(){
 
 
 	
+//Prompt the user to see if they are a Department Manager or Buyer/Seller
+
+//If Buyer/Seller
+  //Prompt to see if they want to sell or buy
+    //If buy= console.log in table for the items
+    //next level is search for item
+
+//If Manager
+  //Prompt to they
