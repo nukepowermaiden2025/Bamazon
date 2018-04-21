@@ -31,11 +31,10 @@ function start() {
         returnProducts();
         purchaseItem();//TODO
       }else if(answer.userType === "I am a Bamazon Seller"){
-        console.log("get ready to sell!")
-        sellItem();//TODO
+        sellItem();
       }
       else{
-        console.log("Hey Mr. money bags, it is time to check on the business")
+        console.log("Hey money bags, it is time to check on the business")
         manageItems();//TODO
       }
     });
@@ -53,23 +52,6 @@ function returnProducts() {
   });
 };
 
-//Insert a product will be called as a part of prompt
-// function insertProduct(){
-//   var postItem = {
-//     product_name:"All Star basketball shorts for women",
-//     department_name:"Sports",
-//     list_price_per: 25.99,
-//     on_sale_price: 20.99,
-//     Inventory:30
-//   };
-//   let query = connection.query('INSERT INTO products SET ?', postItem, function (error, res, fields) {
-//     if (error) throw error;
-//     console.log(res);
-//   // Neat!
-//   });
-// console.log(query.sql); 
-// };
-
 function sellItem() {
   // prompt for info about the item being put up for auction
   inquirer
@@ -78,8 +60,7 @@ function sellItem() {
         name: "product_name",
         type: "input",
         message: "What is the name of your product?"
-      },
-      {
+      },{
         name: "department_name",
         type: "list",
         message: "In which category would you like to place your product for sale?",
@@ -88,8 +69,7 @@ function sellItem() {
           "Misc.", "Personal Computers", "Sports","Tools & Home Improvement",
           "Toy","Wireless Phone Accessory"
         ]
-      },
-      {
+      },{
         name: "list_price_per",
         type: "input",
         message: "What would you like your list price to be?",
@@ -99,8 +79,7 @@ function sellItem() {
           }
           return false;
         }
-      },
-      {
+      },{
       name: "on_sale_price",
       type: "input",
       message: "Please enter your on sale price. If not on sale enter list price?",
@@ -109,8 +88,7 @@ function sellItem() {
             return true;
           } else return false;
         }
-      },
-      {
+      },{
       name: "inventory",
       type: "input",
       message: "Please enter your the amount of the product you have in inventory to sell.",
@@ -120,7 +98,6 @@ function sellItem() {
           }else return false;
         }
       },
-
     ])
     .then(function(answer) {
       // when finished prompting, insert a new item into the db with that info
@@ -141,27 +118,8 @@ function sellItem() {
     returnProducts();
     connection.end();//Adding the end connection her so the it stops when the query is done
   });
-}
+};
 
-// function insertProduct(answer){
-//   var postItem = {
-//     product_name:answer.product_name,
-//     department_name:answer.department_name,
-//     list_price_per: answer.list_price_per,
-//     on_sale_price: answer.on_sale_price,
-//     Inventory:answer.inventory
-//   };
-//   let query = connection.query('INSERT INTO products SET ?', postItem, function (error, res, fields) {
-//     if (error) throw error;
-//     console.log(res);
-//   // Neat!
-//   });
-// console.log(query.sql); 
-// };
-// function start(){
-// 	console.log("The program is ready to accept user inputs from inquirer!");
-	
-// };
   
 
 	
