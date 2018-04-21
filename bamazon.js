@@ -27,14 +27,17 @@ function start() {
       // based on their answer, either call the bid or the post functions
       if (answer.userType === "I want to buy on Bamazon") {
         console.log("get ready to buy!");
+        purchaseItem();//TODO
       }else if(answer.userType === "I am a Bamazon Seller"){
         console.log("get ready to sell!")
+        sellItem();//TODO
       }
       else{
         console.log("Hey Mr. money bags, it is time to check on the business")
+        manageItems();//TODO
       }
     });
-}
+};
 
 
 //All products should return after the products page is updated.
@@ -65,7 +68,88 @@ function insertProduct(){
 console.log(query.sql); 
 };
 
+function sellItem() {
+  // prompt for info about the item being put up for auction
+  inquirer
+    .prompt([
+      {
+        name: "product_name",
+        type: "input",
+        message: "What is the name of your product?"
+      },
+      {
+        name: "department_name",
+        type: "list",
+        message: "In which category would you like to place your product for sale?",
+        choices: [
+          "Apparel", 
+          "Camera", 
+          "Electronics",
+          "Health and Beauty",
+          "Kitchen",
+          "Misc.",
+          "Personal Computers",
+          "Sports",
+          "Tools & Home Improvement",
+          "Toy",
+          "Wireless Phone Accessory"
+        ]
+      },
+      {
+        name: "list_price_per",
+        type: "input",
+        message: "What would you like your list price to be?",
+        validate: function(value) {
+          if ($.isNumeric(value) === true) {
+            return true;
+          }
+          return false;
+        }
+      },
+      {
+      name: "on_sale_price",
+      type: "input",
+      message: "Please enter your on sale price. If not on sale enter list price?",
+      validate: function(value) {
+          if ($.isNumeric(value) === true) {
+            return true;
+          }
+          return false;
+        }
+      },
+      name: "inventory",
+      type: "input",
+      message: "Please enter your on sale price. If not on sale enter list price?",
+      validate: function(value) {
+          if ($.isNumeric(value) === true) {
+            return true;
+          }
+          return false;
+        }
+      },
 
+    ])
+    .then(function(answer) {
+      // when finished prompting, insert a new item into the db with that info
+     insertProduct();
+    });
+}
+
+function insertProduct(){
+  var postItem = {
+    product_name:answer.product_name,
+    department_name:answer.department_name,
+    list_price_per: answer.list_price_per,
+    on_sale_price: answer.on_sale_price,
+    Inventory:30
+  };
+  let query = connection.query('INSERT INTO products SET ?', postItem, function (error, res, fields) {
+    if (error) throw error;
+    console.log(res);
+  // Neat!
+  });
+console.log(query.sql); 
+};
 // function start(){
 // 	console.log("The program is ready to accept user inputs from inquirer!");
 	
