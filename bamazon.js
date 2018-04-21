@@ -15,13 +15,35 @@ connection.connect(function(err) {
   returnProducts();
 });
 
+function start() {
+  inquirer
+    .prompt({
+      name: "userType",
+      type: "list",
+      message: "Please choose the best fit scenario below?",
+      choices: ["I want to buy on Bamazon", "I am a Bamazon Seller", "I am a Bamazon Manager"]
+    })
+    .then(function(answer) {
+      // based on their answer, either call the bid or the post functions
+      if (answer.userType === "I want to buy on Bamazon") {
+        console.log("get ready to buy!");
+      }else if(answer.userType === "I am a Bamazon Seller"){
+        console.log("get ready to sell!")
+      }
+      else{
+        console.log("Hey Mr. money bags, it is time to check on the business")
+      }
+    });
+}
+
+
 //All products should return after the products page is updated.
 function returnProducts() {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
     console.log(res);
     insertProduct();
-    start();
+    // start();
     connection.end();
   });
 };
@@ -44,12 +66,11 @@ console.log(query.sql);
 };
 
 
-function start(){
-	console.log("The program is ready to accept user inputs from inquirer!");
+// function start(){
+// 	console.log("The program is ready to accept user inputs from inquirer!");
 	
-};
+// };
   
-
 
 	
 //Prompt the user to see if they are a Department Manager or Buyer/Seller
