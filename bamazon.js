@@ -117,9 +117,10 @@ function sellItem() {
           return false;
         }
       },
+      {
       name: "inventory",
       type: "input",
-      message: "Please enter your on sale price. If not on sale enter list price?",
+      message: "Please enter your the amount of the product you have in inventory to sell.",
       validate: function(value) {
           if ($.isNumeric(value) === true) {
             return true;
@@ -141,7 +142,7 @@ function insertProduct(){
     department_name:answer.department_name,
     list_price_per: answer.list_price_per,
     on_sale_price: answer.on_sale_price,
-    Inventory:30
+    Inventory:answer.inventory
   };
   let query = connection.query('INSERT INTO products SET ?', postItem, function (error, res, fields) {
     if (error) throw error;
