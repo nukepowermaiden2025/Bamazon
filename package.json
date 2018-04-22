@@ -23,7 +23,10 @@
   },
   "homepage": "https://github.com/nukepowermaiden2025/Bamazon#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
     "inquirer": "^5.2.0",
-    "mysql": "^2.15.0"
+    "konsole.table": "^0.1.1",
+    "mysql": "^2.15.0",
+    "word-wrap": "^1.2.3"
   }
 }
