@@ -93,14 +93,15 @@ function purchaseItem(){
     ])
     .then(function(answer) {
       // when finished prompting, insert a new item into the db with that info
-      connection.query(`SELECT * FROM products WHERE id=${answer.id}`,function(err, res) {
+      // connection.query("SELECT * FROM products WHERE id=?",answer.id,function(err, res) {
+      connection.query("SELECT * FROM products where id=?",answer.id,function(err, res) {
         if (err) throw err;
 
-        // if(parseInt(answer.quantity) <= res.Inventory){
-        //   console.log(`You have purchased ${answer.quantity} of ${res.product_name}`);
-        // }else{
-        //   console.log(`Sorry there are not ${answer.quantity} available for purchase. The max available is ${res.Inventory}`)
-        // }
+        if(parseInt(answer.quantity) <= res.Inventory){
+          console.log(`You have purchased ${answer.quantity} of ${res[0].product_name}`);
+        }else{
+          console.log(`Sorry there are not ${answer.quantity} available for purchase. The max available is ${res[0].Inventory}`)
+        }
         console.log(res);
         // console.log(query.sql); 
         connection.end();
@@ -109,7 +110,7 @@ function purchaseItem(){
       });
         
   //     // Neat!
-  //     });
+      // });
     
   //   returnProducts();
   //   connection.end();//Adding the end connection her so the it stops when the query is done
