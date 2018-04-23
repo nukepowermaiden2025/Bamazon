@@ -15,8 +15,9 @@ var connection = mysql.createConnection({
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId);
-  returnProducts();
+  // returnProducts();
   // start();
+  purchaseItem();
 });
 
 function start() {
@@ -61,7 +62,6 @@ function returnProducts() {
     }
    console.table(itemArr);
     // console.log(table);
-    connection.end();
     // insertProduct();
     // start();  
   });
@@ -74,70 +74,46 @@ function returnProducts() {
 function purchaseItem(){
   returnProducts();//show the items for the user to buy
     
-  // inquirer
-  //   .prompt([
-  //     {
-  //       name: "product_name",
-  //       type: "input",
-  //       message: "What is the name of your product?"
-  //     },{
-  //       name: "department_name",
-  //       type: "list",
-  //       message: "In which category would you like to place your product for sale?",
-  //       choices: [
-  //         "Apparel", "Camera", "Electronics","Health and Beauty","Kitchen",
-  //         "Misc.", "Personal Computers", "Sports","Tools & Home Improvement",
-  //         "Toy","Wireless Phone Accessory"
-  //       ]
-  //     },{
-  //       name: "list_price_per",
-  //       type: "input",
-  //       message: "What would you like your list price to be?",
-  //       validate: function(value) {
-  //         if (Math.round(value)) {
-  //           return true;
-  //         }
-  //         return false;
-  //       }
-  //     },{
-  //     name: "on_sale_price",
-  //     type: "input",
-  //     message: "Please enter your on sale price. If not on sale enter list price?",
-  //     validate: function(value) {
-  //         if (Math.round(value)) {
-  //           return true;
-  //         } else return false;
-  //       }
-  //     },{
-  //     name: "inventory",
-  //     type: "input",
-  //     message: "Please enter your the amount of the product you have in inventory to sell.",
-  //     validate: function(value) {
-  //         if (Math.round(value)) {
-  //           return true;
-  //         }else return false;
-  //       }
-  //     },
-  //   ])
-  //   .then(function(answer) {
-  //     // when finished prompting, insert a new item into the db with that info
-  //     var postItem = {
-  //       product_name:answer.product_name,
-  //       department_name:answer.department_name,
-  //       list_price_per: answer.list_price_per,
-  //       on_sale_price: answer.on_sale_price,
-  //       Inventory:answer.inventory
-  //     };
-  //     let query = connection.query('INSERT INTO products SET ?', postItem, function (error, res, fields) {
-  //       if (error) throw error;
-  //       console.log(res);
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        type: "input",
+        message: "What is the order id of product you want to purchase"
+      },{
+      name: "quantity",
+      type: "input",
+      message: "Please enter quantity of the product you would like to purchase",
+      validate: function(value) {
+          if (Math.round(value)) {
+            return true;
+          }else return false;
+        }
+      },
+    ])
+    .then(function(answer) {
+      // when finished prompting, insert a new item into the db with that info
+      connection.query(`SELECT * FROM products WHERE id=${answer.id}`,function(err, res) {
+        if (err) throw err;
+
+        // if(parseInt(answer.quantity) <= res.Inventory){
+        //   console.log(`You have purchased ${answer.quantity} of ${res.product_name}`);
+        // }else{
+        //   console.log(`Sorry there are not ${answer.quantity} available for purchase. The max available is ${res.Inventory}`)
+        // }
+        console.log(res);
+        // console.log(query.sql); 
+        connection.end();
+        // insertProduct();
+        // start();  
+      });
         
   //     // Neat!
   //     });
-  //   console.log(query.sql); 
+    
   //   returnProducts();
   //   connection.end();//Adding the end connection her so the it stops when the query is done
-  // });
+  });
 
 };
 
@@ -211,7 +187,7 @@ function sellItem() {
 
   
 
-	
+	//***********NOTES***************/
 //Prompt the user to see if they are a Department Manager or Buyer/Seller
 
 //If Buyer/Seller
