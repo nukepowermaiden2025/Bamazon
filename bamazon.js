@@ -4,20 +4,18 @@ var cTable = require('console.table');
 var konsole =require('konsole.table');
 
 var connection = mysql.createConnection({
-    host:"localhost",
-	port:3306,
-	user:"root",
-	password:"36972255",
-    database:"bamazon"
+  host:"localhost",
+  port:3306,
+  user:"root",
+  password:"36972255",
+  database:"bamazon"
 });
 
 
 connection.connect(function(err) {
   if (err) throw err;
   console.log("connected as id " + connection.threadId);
-  // returnProducts();
-  // start();
-  purchaseItem();
+  start(); 
 });
 
 function start() {
@@ -25,61 +23,57 @@ function start() {
       name: "userType",
       type: "list",
       message: "Please choose the best fit scenario below?",
-      choices: ["I want to buy on Bamazon", "I am a Bamazon Seller", "I am a Bamazon Manager"]
+      choices: ["I want to buy on Bamazon", "I am a Bamazon Seller", "I am a Bamazon Manager","Maybe Later, I want to exit."]
     })
     .then(function(answer) {
       // based on their answer, either call the bid or the post functions
       if (answer.userType === "I want to buy on Bamazon") {
         console.log("get ready to buy!");
-        returnProducts();
-        purchaseItem();//TODO
+        purchaseItem();
       }else if(answer.userType === "I am a Bamazon Seller"){
         sellItem();
       }
-      else{
+      else if(answer.userType === "I am a Bamazon Manager"){
         console.log("Hey money bags, it is time to check on the business")
         manageItems();//TODO
+      }else{
+        connection.end();
       }
     });
 };
 
 
-//All products should return after the products page is updated.
 function returnProducts() {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
     var itemArr = [];
+    console.log("\n");
     for( let i = 0; i< res.length; i++){
+    
       var items = { 
         id:res[i].id,
         product_name:res[i].product_name, 
         department_name:res[i].department_name,
         list_price_per:res[i].list_price_per, 
         on_sale_price:res[i].on_sale_price,
-        Inventory:res[i].Inventory
+        inventory:res[i].inventory
       };  
       itemArr.push(items);     
     }
-   console.table(itemArr);
-    // console.log(table);
-    // insertProduct();
-    // start();  
+   console.table(itemArr); 
   });
 };
 
-
-//take in id of the item and run a query to return the inventory amount
-//Add a search using keyword LIKE
-//there are enough in inventory then run
 function purchaseItem(){
   returnProducts();//show the items for the user to buy
+
     
   inquirer
     .prompt([
       {
         name: "id",
         type: "input",
-        message: "What is the order id of product you want to purchase"
+        message: "What is the id of product you want to purchase"
       },{
       name: "quantity",
       type: "input",
@@ -92,30 +86,37 @@ function purchaseItem(){
       },
     ])
     .then(function(answer) {
-      // when finished prompting, insert a new item into the db with that info
-      // connection.query("SELECT * FROM products WHERE id=?",answer.id,function(err, res) {
+      var quantity = parseInt(answer.quantity);
+      console.log(quantity);
+      
       connection.query("SELECT * FROM products where id=?",answer.id,function(err, res) {
         if (err) throw err;
+          // console.log(res);
+          console.log(answer.id,quantity);
+          console.log(res[0].inventory);
 
-        if(parseInt(answer.quantity) <= res.Inventory){
-          console.log(`You have purchased ${answer.quantity} of ${res[0].product_name}`);
+        if(quantity < res[0].inventory){
+          console.log(`You have purchased ${quantity} of ${res[0].product_name}`);
+          updateProducts(answer.id,quantity);
         }else{
-          console.log(`Sorry there are not ${answer.quantity} available for purchase. The max available is ${res[0].Inventory}`)
+          console.log(`Sorry there are not ${quantity} available for purchase. The max available is ${res[0].inventory}`);
         }
-        console.log(res);
-        // console.log(query.sql); 
-        connection.end();
-        // insertProduct();
-        // start();  
       });
-        
-  //     // Neat!
-      // });
+      start();
+    });
     
-  //   returnProducts();
-  //   connection.end();//Adding the end connection her so the it stops when the query is done
-  });
+};
 
+function updateProducts(id,quantity){
+
+  console.log("Updating product quantities...",id,quantity);
+
+  var query = "UPDATE products SET inventory=inventory-? WHERE id=?";
+  connection.query(query,[quantity,id], function(err, res) {
+      if (err) throw err;
+      returnProducts();
+    }
+  );
 };
 
 function sellItem() {
@@ -166,34 +167,32 @@ function sellItem() {
       },
     ])
     .then(function(answer) {
-      // when finished prompting, insert a new item into the db with that info
       var postItem = {
-        product_name:answer.product_name,
-        department_name:answer.department_name,
-        list_price_per: answer.list_price_per,
-        on_sale_price: answer.on_sale_price,
-        Inventory:answer.inventory
+        product_name:answer.product_name,department_name:answer.department_name,
+        list_price_per: answer.list_price_per,on_sale_price: answer.on_sale_price,inventory:answer.inventory
       };
       let query = connection.query('INSERT INTO products SET ?', postItem, function (error, res, fields) {
         if (error) throw error;
         console.log(res);
        
-      // Neat!
-      });
-    console.log(query.sql); 
+      }); 
     returnProducts();
-    connection.end();//Adding the end connection her so the it stops when the query is done
+    //Adding the end connection her so the it stops when the query is done
+   start();
   });
 };
 
-  
+function manageItems(){
+
+};//TODO
+
+
+
 
 	//***********NOTES***************/
 //Prompt the user to see if they are a Department Manager or Buyer/Seller
 
 //If Buyer/Seller
-  //Prompt to see if they want to sell or buy
-    //If buy= console.log in table for the items
     //next level is search for item
 
 //If Manager
