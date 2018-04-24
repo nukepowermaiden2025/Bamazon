@@ -66,8 +66,6 @@ function returnProducts() {
 
 function purchaseItem(){
   returnProducts();//show the items for the user to buy
-
-    
   inquirer
     .prompt([
       {
@@ -87,19 +85,15 @@ function purchaseItem(){
     ])
     .then(function(answer) {
       var quantity = parseInt(answer.quantity);
-      console.log(quantity);
-      
+    
       connection.query("SELECT * FROM products where id=?",answer.id,function(err, res) {
         if (err) throw err;
-          // console.log(res);
-          console.log(answer.id,quantity);
-          console.log(res[0].inventory);
-
-        if(quantity < res[0].inventory){
+        if(quantity <= res[0].inventory){
           console.log(`You have purchased ${quantity} of ${res[0].product_name}`);
           updateProducts(answer.id,quantity);
         }else{
-          console.log(`Sorry there are not ${quantity} available for purchase. The max available is ${res[0].inventory}`);
+          console.log(`Sorry there are not ${quantity} available for purchase. 
+          The max available is ${res[0].inventory}`);
         }
       });
       start();
@@ -109,8 +103,7 @@ function purchaseItem(){
 
 function updateProducts(id,quantity){
 
-  console.log("Updating product quantities...",id,quantity);
-
+  console.log("Updating product quantities...");
   var query = "UPDATE products SET inventory=inventory-? WHERE id=?";
   connection.query(query,[quantity,id], function(err, res) {
       if (err) throw err;
@@ -168,16 +161,17 @@ function sellItem() {
     ])
     .then(function(answer) {
       var postItem = {
-        product_name:answer.product_name,department_name:answer.department_name,
-        list_price_per: answer.list_price_per,on_sale_price: answer.on_sale_price,inventory:answer.inventory
+        product_name:answer.product_name,
+        department_name:answer.department_name,
+        list_price_per: answer.list_price_per,
+        on_sale_price: answer.on_sale_price,
+        inventory:answer.inventory
       };
       let query = connection.query('INSERT INTO products SET ?', postItem, function (error, res, fields) {
         if (error) throw error;
-        console.log(res);
        
       }); 
     returnProducts();
-    //Adding the end connection her so the it stops when the query is done
    start();
   });
 };
