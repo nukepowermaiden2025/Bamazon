@@ -1,9 +1,13 @@
 # BAMAZON
 
-This is a server side application that allows users to purchase and or sell products on Bamazon. The future release will include a management interface that will allow user to manage there over-head.
+
+[![BAMAZON Video Not Available](http://img.youtube.com/vi/A3L9x6zvGc/0.jpg)](http://www.youtube.com/watch?v=A3L9x6zvGc)
+
+
+This is a server side application that allows users to purchase and or sell products on Bamazon. The future release will include a management interface that will allow user to manage thier over-head cost.
 
 ## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 
 * Clone the repository and ensure that you have Node.js and MySQL installed.
@@ -18,8 +22,8 @@ These instructions will get you a copy of the project up and running on your loc
 * Install the node packages outlined in the package.json.
 
 * Setting up the MySQL database Instance
-    * Enure that you have a mysql database confirgured with for your "localhost" and user and change the  password in the 
-    bamazon.js file
+    * Ensure that you have a mysql database confirgured with  your "localhost" information in the
+    bamazon.js file. See below:
 
     host:"localhost"(your host specifications),
     port:3306(your port number),
@@ -40,7 +44,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Deployment
 
-Future iterations will allow for deployment to live stream.
+Future iterations will allow for deployment and will include a web-based user interface.
 
 ## Built With
 
@@ -55,7 +59,7 @@ Future iterations will allow for deployment to live stream.
 
 ## Authors
 
-*Kourtney Reynolds* - *Initial work* - [Bamazon](https://github.com/nukepowermaiden2025/Bamazon)
+*Kourtney Reynolds* - [Bamazon](https://github.com/nukepowermaiden2025/Bamazon)
 
 
 
