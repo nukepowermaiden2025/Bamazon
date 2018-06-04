@@ -1,7 +1,7 @@
 # BAMAZON
 
 
-[![BAMAZON Video Not Available](http://img.youtube.com/vi/A3L9x6zvGc/0.jpg)](http://www.youtube.com/watch?v=A3L9x6zvGc)
+[![BAMAZON Video Not Available](http://img.youtube.com/vi/-A3L9x6zvGc/0.jpg)](http://www.youtube.com/watch?v=-A3L9x6zvGc)
 
 
 This is a server side application that allows users to purchase and or sell products on Bamazon. The future release will include a management interface that will allow user to manage thier over-head cost.
