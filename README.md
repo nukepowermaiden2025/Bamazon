@@ -1,9 +1,16 @@
-# BAMAZON
+# BAMAZON 
 
-This is a server side application that allows users to purchase and or sell products on Bamazon. The future release will include a management interface that will allow user to manage there over-head.
+This is a server side CLI application that allows users to purchase and or sell products on Bamazon. The future release will include a management interface that will allow user to manage thier over-head cost.
+
+## Watch the Demo
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Q8Zcecsx1uI
+" target="_blank"><img src="http://img.youtube.com/vi/Q8Zcecsx1uI/0.jpg" 
+alt="BAMAZON Video Not Available" max-width="100%" max-hieght="100%" border="10" /></a>
+
+
 
 ## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 
 * Clone the repository and ensure that you have Node.js and MySQL installed.
@@ -18,8 +25,8 @@ These instructions will get you a copy of the project up and running on your loc
 * Install the node packages outlined in the package.json.
 
 * Setting up the MySQL database Instance
-    * Enure that you have a mysql database confirgured with for your "localhost" and user and change the  password in the 
-    bamazon.js file
+    * Ensure that you have a mysql database confirgured with  your "localhost" information in the
+    bamazon.js file. See below:
 
     host:"localhost"(your host specifications),
     port:3306(your port number),
@@ -29,7 +36,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 * Use the bamazon.sql file to create you database schema in Mysql 
 
-
+* Use the productsImport.csv to import some test data into the products table.
 
 
 ### Break down of tests
@@ -40,7 +47,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Deployment
 
-Future iterations will allow for deployment to live stream.
+Future iterations will allow for deployment and will include a web-based user interface.
 
 ## Built With
 
@@ -55,7 +62,7 @@ Future iterations will allow for deployment to live stream.
 
 ## Authors
 
-*Kourtney Reynolds* - *Initial work* - [Bamazon](https://github.com/nukepowermaiden2025/Bamazon)
+*Kourtney Reynolds* - [Bamazon](https://github.com/nukepowermaiden2025/Bamazon)
 
 
 
