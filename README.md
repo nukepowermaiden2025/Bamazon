@@ -3,9 +3,9 @@
 This is a server side CLI application that allows users to purchase and or sell products on Bamazon. The future release will include a management interface that will allow user to manage thier over-head cost.
 
 ## Watch the Demo
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=-A3L9x6zvGc
-" target="_blank"><img src="http://img.youtube.com/vi/-A3L9x6zvGc/0.jpg" 
-alt="BAMAZON Video Not Available" width="240" height="180" border="10" /></a>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Q8Zcecsx1uI
+" target="_blank"><img src="http://img.youtube.com/vi/Q8Zcecsx1uI/0.jpg" 
+alt="BAMAZON Video Not Available" max-width="100%" border="10" /></a>
 
 
 
