@@ -5,7 +5,7 @@ This is a server side CLI application that allows users to purchase and or sell 
 ## Watch the Demo
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=Q8Zcecsx1uI
 " target="_blank"><img src="http://img.youtube.com/vi/Q8Zcecsx1uI/0.jpg" 
-alt="BAMAZON Video Not Available" max-width="100%" border="10" /></a>
+alt="BAMAZON Video Not Available" max-width="100%" max-hieght="100%" border="10" /></a>
 
 
 
@@ -36,7 +36,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 * Use the bamazon.sql file to create you database schema in Mysql 
 
-
+* Use the productsImport.csv to import some test data into the products table.
 
 
 ### Break down of tests
