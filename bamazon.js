@@ -19,6 +19,7 @@ connection.connect(function(err) {
 });
 
 function start() {
+  console.log("\n\n   WELCOME TO BAMAZON! STRAIGHT TO THE POINT RETAIL SPACE.\n\n")
   inquirer.prompt({
       name: "userType",
       type: "list",
@@ -35,7 +36,7 @@ function start() {
       }
       else if(answer.userType === "I am a Bamazon Manager"){
         console.log("Hey money bags, it is time to check on the business")
-        manageItems();//TODO
+        startmanageItems();//TODO
       }else{
         connection.end();
       }
@@ -89,7 +90,7 @@ function purchaseItem(){
       connection.query("SELECT * FROM products where id=?",answer.id,function(err, res) {
         if (err) throw err;
         if(quantity <= res[0].inventory){
-          console.log(`You have purchased ${quantity} of ${res[0].product_name}`);
+          console.log(`\nYou have purchased ${quantity} of ${res[0].product_name}\n`);
           updateProducts(answer.id,quantity);
         }else{
           console.log(`Sorry there are not ${quantity} available for purchase. 
@@ -176,7 +177,84 @@ function sellItem() {
   });
 };
 
-function manageItems(){
+function startmanageItems(){
+  console.log("\n\n   WELCOME TO BAMAZON MANAGER.\n\n")
+  inquirer.prompt({
+      name: "userType",
+      type: "list",
+      message: "Please choose the best fit scenario below?",
+      choices: ["I want to see all my products", "I only need to see one item", "I need to see one category","Maybe Later, I want to exit."]
+    })
+    .then(function(answer) {
+      // based on their answer, either call the warehouse or just a certain item
+      if (answer.userType === "I want to see all my products") {
+        console.log("\n\nHey Big Cheese, let's see how well you are doing!\n\n");
+        manageWarhouse();//TODO
+      }else if(answer.userType === "I only need to see one item"){
+        manageOneItem();//TODO
+      }
+      else if(answer.userType === "I need to see one category"){
+        console.log("Hey money bags, it is time to check on the business")
+        manageCategory();//TODO
+      }else{
+        connection.end();
+      }
+    });
+
+};
+
+function manageWarhouse(){
+  // console.log("\n\n Here all your items you have for sale on BAMAZON\n\n");
+ console.log("\n\n There warehouse is under new management. Please be patient while we revamp the site\n\n");
+  
+};//TODO
+
+function manageOneItem(){
+  // console.log("\n\n Here is the one item you were interest in that is listed on BAMAZON\n\n");
+ console.log("\n\n There warehouse is under new management. Please be patient while we revamp the site\n\n");
+
+};//TODO
+
+function manageCategory(){
+  // console.log("\n\n Here are all the items you have listed category: 'exampleCategory' \n\n");
+ console.log("\n\n There warehouse is under new management. Please be patient while we revamp the site\n\n");
+
+ inquirer
+    .prompt([
+      {
+        name: "department_name",
+        type: "list",
+        message: "In which category is your product?",
+        choices: [
+          "Apparel", "Camera", "Electronics","Health and Beauty","Kitchen",
+          "Misc.", "Personal Computers", "Sports","Tools & Home Improvement",
+          "Toy","Wireless Phone Accessory"
+        ]
+      },
+    ])
+    .then(function(answer) {
+  //TODO Add the SQL to combine products with a overhead table.
+      connection.query("SELECT * FROM products where department_name=?",answer.department_name,function(err, res) {
+        if (err) throw err;
+        let itemArr = [];
+        console.log("\n");
+        for( let i = 0; i< res.length; i++){
+        
+          let items = { 
+            id:res[i].id,
+            product_name:res[i].product_name, 
+            department_name:res[i].department_name,
+            list_price_per:res[i].list_price_per, 
+            on_sale_price:res[i].on_sale_price,
+            inventory:res[i].inventory
+          };  
+          itemArr.push(items);     
+        }
+       console.table(itemArr); 
+      });
+      startmanageItems();
+    }); 
+   
 
 };//TODO
 
